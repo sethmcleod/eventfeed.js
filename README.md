@@ -1,15 +1,32 @@
-# event-feed
+# Google Event-Feed
 
-A simple plugin for displaying a feed of upcoming events with Google Calendar [Javascript API](https://developers.google.com/google-apps/calendar/v3/whats-new) v3. This script requires only the url of a public calendar and does not use OAuth 2.0 authorization.
+A simple plugin for displaying a feed of upcoming events with Google Calendar Javascript API v3. This script requires only the url of a public calendar and does not use OAuth 2.0 authorization.
 
-## To Do
+## Technologies used
 
-- Rewrite in pure javascript
-- Prototype date functions
-- Add options and docs
-- Create example page
-- Travis build check
+JavaScript
+- [Browserify](http://browserify.org/) with ES6/2015 support through [Babel](https://babeljs.io/)
+- [Node](https://nodejs.org/)
 
-## License
+Styles
+- [Sass](http://sass-lang.com/) via ([node-sass](https://github.com/sass/node-sass))
 
-Event Feed is licensed under the [MIT License](https://github.com/sethmcleod/event-feed/blob/master/LICENSE)
+Markup
+- [Jade](http://jade-lang.com/)
+
+Optimization
+- [Imagemin](https://github.com/imagemin/imagemin)
+- [Uglify](https://github.com/mishoo/UglifyJS)
+
+Server
+- [BrowserSync](http://www.browsersync.io/)
+
+Linting
+- [ESlint](http://eslint.org/)
+
+Automation
+- [Gulp](http://gulpjs.com)
+
+Code Management
+- [Editorconfig](http://editorconfig.org/)
+- [Git](https://git-scm.com/)
