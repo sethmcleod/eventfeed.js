@@ -5,7 +5,8 @@ A simple plugin for displaying a feed of upcoming events with Google Calendar Ja
 ## Technologies used
 
 JavaScript
-- [Browserify](http://browserify.org/) with ES6/2015 support through [Babel](https://babeljs.io/)
+- [Browserify](http://browserify.org/)
+- [Babel](https://babeljs.io/) for ES6/2015 support
 - [Node](https://nodejs.org/)
 
 Styles
