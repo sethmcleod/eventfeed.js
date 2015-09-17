@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Eventfeed.js by sethmcleod</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Eventfeed.js</h1>
+      <h2 class="project-tagline">Google Calender Event Feed</h2>
+      <a href="https://github.com/sethmcleod/eventfeed.js" class="btn">View on GitHub</a>
+      <a href="https://github.com/sethmcleod/eventfeed.js/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/sethmcleod/eventfeed.js/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="google-calendar-event-feed" class="anchor" href="#google-calendar-event-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Calendar Event Feed</h1>
+
+<p><img src="https://img.shields.io/badge/version-beta-red.svg" alt="Version"> <a href="https://travis-ci.org/sethmcleod/eventfeed.js"><img src="https://img.shields.io/badge/build-passed-brightgreen.svg" alt="Travis CI"></a></p>
+
+<p>Eventfeed.js is a simple plugin for displaying a feed of upcoming events using <a href="https://developers.google.com/google-apps/calendar/v3/reference/events/list">Google Calendar API v3</a>. No jQuery required, it's just plain javascript.</p>
+
+<blockquote>
+<p>This is currently in working beta and may not function correctly.</p>
+</blockquote>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Installation is easy: Just download the script from the <strong>dist</strong> folder and include it in your HTML:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/eventfeed.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h2>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h2>
+
+<p>To use, just declare a variable and assign to that a new instance of Eventfeed. When you're ready to initiate the feed, call the <code>run()</code> function on your variable.</p>
+
+<div class="highlight highlight-text-html-basic"><pre><span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span>&gt;</span>
+<span class="pl-s1">    <span class="pl-k">var</span> feed <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Eventfeed</span>({</span>
+<span class="pl-s1">        calendarId<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>test@example.com<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">    });</span>
+<span class="pl-s1">    feed.run();</span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<p>Eventfeed will by default look for a <code>&lt;div id="eventfeed"&gt;&lt;/div&gt;</code> and fill it with the events.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>eventfeed<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>event<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>{{id}}<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>month<span class="pl-pds">"</span></span>&gt;{{month}}&lt;/<span class="pl-ent">span</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>day<span class="pl-pds">"</span></span>&gt;{{day}}&lt;/<span class="pl-ent">span</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>title<span class="pl-pds">"</span></span>&gt;{{title}}&lt;/<span class="pl-ent">span</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>&gt;{{description}}&lt;/<span class="pl-ent">span</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>start<span class="pl-pds">"</span></span>&gt;{{start}}&lt;/<span class="pl-ent">span</span>&gt;
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>end<span class="pl-pds">"</span></span>&gt;{{end}}&lt;/<span class="pl-ent">span</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>The only thing you'll need is a <strong>calendar id</strong> for the public calendar. This is usually the email address used to create the calendar.</p>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<ul>
+<li>
+<code>calendarId</code> (string) - The email address linked to a public calendar. <strong>Required</strong>.</li>
+<li>
+<code>target</code> (string) - The ID of a DOM element you want to add events to.</li>
+<li>
+<code>abbreviate</code> (boolean) - Whether or not to abbreviate the names of months. Default is <code>false</code>.</li>
+<li>
+<code>maxResults</code> (number) - Maximum number of events returned on one result page. Default is <code>250</code>.</li>
+<li>
+<code>orderBy</code> (string) - The order of the events returned. Available options are:
+
+<ul>
+<li>
+<code>none</code> (default) - As they come from Instagram.</li>
+<li>
+<code>startTime</code> - Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)</li>
+<li>
+<code>updated</code> - Order by last modification time (ascending).</li>
+</ul>
+</li>
+<li>
+<code>pastEvents</code> (boolean) - Whether to include past events. Default is <code>false</code>.</li>
+<li>
+<code>showDeleted</code> (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Default is <code>false</code>.</li>
+<li>
+<code>singleEvents</code> (boolean) - Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Default is <code>false</code>.</li>
+</ul>
+
+<h2>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<h4>
+<a id="why-am-i-getting-a-json-error" class="anchor" href="#why-am-i-getting-a-json-error" aria-hidden="true"><span class="octicon octicon-link"></span></a>"Why am I getting a JSON error?"</h4>
+
+<p>First make sure the calendar linked to your id is public, and the <em>hide details</em> option is not checked (this limits JSON data returned).</p>
+
+<p><img src="resources/public.png" alt="Sharing Settings"></p>
+
+<p><strong>Currently only <code>@gmail.com</code> addresses are supported.</strong> Using an account from a different domain, one that is connected through Google Apps, will automatically hide event details and the returned JSON data will be differently formatted.  </p>
+
+<h2>
+<a id="change-log" class="anchor" href="#change-log" aria-hidden="true"><span class="octicon octicon-link"></span></a>Change Log</h2>
+
+<p><strong>1.0.0</strong></p>
+
+<ul>
+<li>Initial release</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/sethmcleod/eventfeed.js">Eventfeed.js</a> is maintained by <a href="https://github.com/sethmcleod">sethmcleod</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
