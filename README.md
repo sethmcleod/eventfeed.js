@@ -49,7 +49,7 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 - `calendarId` (string) - The email address linked to a public calendar. __Required__.
 - `target` (string) - The ID of a DOM element you want to add events to.
 - `abbreviate` (boolean) - Whether or not to abbreviate the names of months. Default is `false`.
-- `maxResults` (number) - Maximum number of events returned on one result page. Default is `250`.
+- `maxResults` (number) - Maximum number of events returned. Default is `250`.
 - `orderBy` (string) - The order of the events returned. Available options are:
     - `none` (default) - As they come from Instagram.
     - `startTime` - Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)
