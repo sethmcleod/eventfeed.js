@@ -75,6 +75,6 @@ gulp.task ('watch', function(){
 // Main Tasks
 // ////////////////////////////////////////////////
 
-gulp.task('compile', ['scripts', 'style']);
+gulp.task('compile', ['scripts', 'styles']);
 
-gulp.task('default', ['scripts', 'style', 'serve', 'watch']);
+gulp.task('default', ['scripts', 'styles', 'serve', 'watch']);
