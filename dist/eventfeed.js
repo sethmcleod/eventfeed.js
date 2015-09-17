@@ -115,11 +115,11 @@
     };
 
     // helper function for parsing month
-    Eventfeed.prototype._thisMonth = function(d) {
+    function _thisMonth(d, a) {
       var dateTime = new Date(d),
-        months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
-        monthsAbbr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      if (this.options.abbreviate === true) {
+          months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
+          monthsAbbr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      if (a === true) {
         return monthsAbbr[dateTime.getMonth()];
       } else {
         return months[dateTime.getMonth()];
@@ -127,19 +127,19 @@
     }
 
     // helper function for date plus oridinal
-    Eventfeed.prototype._thisDay = function(d) {
+    function _thisDay(d) {
       var dateTime = new Date(d);
       return dateTime.getDate() + _thisOrd(dateTime.getDate());
     }
 
     // helper function for time (HH:MM)
-    Eventfeed.prototype._thisTime = function(d) {
+    function _thisTime(d) {
       var dateTime = new Date(d);
       return dateTime.timeNow();
     }
 
     // helper function for date ordinals
-    Eventfeed.prototype._thisOrd = function(d) {
+    function _thisOrd(d) {
       if (d > 3 && d < 21) return 'th';
       switch (d % 10) {
         case 1:  return "st";
