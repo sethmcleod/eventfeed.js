@@ -1,5 +1,7 @@
 # Google Calendar Event Feed
 
+![Version](https://img.shields.io/badge/version-beta-red.svg) [![Travis CI](https://img.shields.io/badge/build-passed-brightgreen.svg)](https://travis-ci.org/sethmcleod/eventfeed.js)
+
 Eventfeed.js is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
 
 > This is currently in working beta and may not function correctly.
@@ -12,7 +14,7 @@ Installation is easy: Just download the script from the __dist__ folder and incl
 ```
 
 ## Basic Usage
-To use, just declare a variable and assign to that a new instance of Eventfeed. Then when you're ready to initiate the feed, call the `run()` function on your variable.
+To use, just declare a variable and assign to that a new instance of Eventfeed. When you're ready to initiate the feed, call the `run()` function on your variable.
 
 ```html
 <script type="text/javascript">
