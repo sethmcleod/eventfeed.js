@@ -64,7 +64,7 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 
 First make sure the calendar linked to your id is public, and the *hide details* option is not checked (this limits JSON data returned).
 
-![Sharing Settings](resources/public.png)
+![Sharing Settings](https://raw.githubusercontent.com/sethmcleod/eventfeed.js/gh-pages/resources/public.png)
 
  __Currently only `@gmail.com` addresses are supported.__ Using an account from a different domain, one that is connected through Google Apps, will automatically hide event details and the returned JSON data will be differently formatted.  
 
