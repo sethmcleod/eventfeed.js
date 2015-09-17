@@ -11,6 +11,8 @@
       // default options
       this.options = {
         target: 'eventfeed',
+        orderBy: 'none',
+        pastEvents: false,
         abbreviate: false
       };
 
@@ -26,30 +28,90 @@
     // run the feed
     Eventfeed.prototype.run = function(url) {
 
-      console.log('Running feed...');
-
       // make sure the calendarid is set
       if (typeof this.options.calendarId !== 'string') {
         throw new Error("Missing calendarId.");
       }
 
+      console.log('Running feed...');
+
+      this._buildUrl();
+      this._fetchData();
+      this._parseData();
+
       // return true if all goes well
       return true;
     };
 
-    // data parser (must be a JSON object)
-    Eventfeed.prototype._parseData = function() {
-      var data;
-      if (typeof response !== 'object') {
-        throw new Error('Invalid JSON response');
+    // url builder for the request
+    Eventfeed.prototype._buildUrl = function() {
+      var base, fields, key, final, now;
+      base = "https://www.googleapis.com/calendar/v3/calendars/";
+      fields = "&fields=description,items(created,description,end,hangoutLink,htmlLink,id,location,start,status,summary,updated)";
+      key = "&key=AIzaSyBl3FauupFzkP3F4BYqL47_keO-PSmrTOQ";
+      final = "" + base + this.options.calendarId + "/events?";
+      now = (new Date()).toISOString();
+      // max results
+      if (this.options.maxResults != null) {
+        if (typeof this.options.maxResults !== 'number') {
+          throw new Error("The maxResults option must be a number.");
+        }
+        final += "&maxResults=" + this.options.maxResults;
       }
-      console.log('Parsing Data');
+      // single events
+      if (this.options.singleEvents != null) {
+        if (typeof this.options.singleEvents !== 'boolean') {
+          throw new Error("The singleEvents option must be a boolean.");
+        }
+        final += "&singleEvents=" + this.options.singleEvents;
+      }
+      // show deleted
+      if (this.options.showDeleted != null) {
+        if (typeof this.options.showDeleted !== 'boolean') {
+          throw new Error("The showDeleted option must be a boolean.");
+        }
+        final += "&showDeleted=" + this.options.showDeleted;
+      }
+      // past events
+      if (typeof this.options.pastEvents !== 'boolean') {
+        throw new Error("The pastEvents option must be a boolean.");
+      }
+      if (this.options.pastEvents === false) {
+        final += '&timeMin=' + now;
+      }
+      // order by
+      switch (this.options.orderBy) {
+        case "none":
+          break;
+        case "startTime":
+          if(this.options.singleEvents !== true) {
+            throw new Error("The singleEvents option must be true to order by startTime.");
+          }
+          final += "&orderBy=startTime";
+          break;
+        case "updated":
+          final += "&orderBy=updated";
+          break;
+        default:
+          throw new Error("Invalid option for orderBy: '" + this.options.orderBy + "'.");
+      }
+      final += key;
+      console.log('Building url...');
+      console.log('url: ' + final);
     };
 
-    Eventfeed.prototype._buildUrl = function() {
-      var base, final;
-      base = "https://www.googleapis.com/calendar/v3/calendars/";
-      console.log('Building url...');
+    // data fetcher
+    Eventfeed.prototype._fetchData = function(url) {
+      url = url || '';
+      console.log('Fetching data...');
+      console.log('data: undefined');
+    };
+
+    // data parser (must be a JSON object)
+    Eventfeed.prototype._parseData = function(data) {
+      data = data || 'empty';
+      console.log('Parsing data...');
+      console.log('no data to parse.');
     };
 
     // helper function for parsing month
