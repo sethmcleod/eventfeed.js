@@ -1,8 +1,8 @@
 # Google Calendar Event Feed
 
-Eventfeed is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
+Eventfeed.js is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
 
-> This is currently in beta and may not function correctly.
+> This is currently in working beta and may not function correctly.
 
 ## Installation
 Installation is easy: Just download the script from the __dist__ folder and include it in your HTML:
@@ -12,18 +12,18 @@ Installation is easy: Just download the script from the __dist__ folder and incl
 ```
 
 ## Basic Usage
-To use, just declare a variable and assign to that a `new` instance of Eventfeed. Then when you're ready to initiate the feed, call the `run()` function on your variable.
+To use, just declare a variable and assign to that a new instance of Eventfeed. Then when you're ready to initiate the feed, call the `run()` function on your variable.
 
 ```html
 <script type="text/javascript">
     var feed = new Eventfeed({
-        clientId: 'YOUR_CLIENT_ID'
+        calendarId: 'test@example.com'
     });
     feed.run();
 </script>
 ```
 
-Eventfeed will by default look for a `<div id="eventfeed"></div>` and fill it with the event data.
+Eventfeed will by default look for a `<div id="eventfeed"></div>` and fill it with the events.
 
 ```html
 <div id="eventfeed">
@@ -46,16 +46,25 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 
 - `calendarId` (string) - The email address linked to a public calendar. __Required__.
 - `target` (string) - The ID of a DOM element you want to add events to.
-- `abbreviate` (boolean) - Whether or not to abbreviate the names of months. Default is false.
-- `maxResults` - Maximum number of events returned on one result page. By default the value is 250 events.
+- `abbreviate` (boolean) - Whether or not to abbreviate the names of months. Default is `false`.
+- `maxResults` (number) - Maximum number of events returned on one result page. Default is `250`.
 - `orderBy` (string) - The order of the events returned. Available options are:
     - `none` (default) - As they come from Instagram.
     - `startTime` - Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)
     - `updated` - Order by last modification time (ascending).
-- `showDeleted` (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. The default is False.
-- `singleEvents` (boolean) - Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. The default is False.
-- `timeMax` (datetime) - Upper bound for an event's start time to filter by. The default is not to filter by start time.
-- `timeMin` (datetime) - Lower bound for an event's end time to filter by. The default is not to filter by end time.
+- `pastEvents` (boolean) - Whether to include past events. Default is `false`.
+- `showDeleted` (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Default is `false`.
+- `singleEvents` (boolean) - Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Default is `false`.
+
+## FAQ
+
+#### "Why am I getting a JSON error?"
+
+First make sure the calendar linked to your id is public, and the *hide details* option is not checked (this limits JSON data returned).
+
+![Sharing Settings](resources/public.png)
+
+ __Currently only `@gmail.com` addresses are supported.__ Using an account from a different domain, one that is connected through Google Apps, will automatically hide event details and the returned JSON data will be differently formatted.  
 
 ## Change Log
 
