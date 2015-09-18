@@ -5,7 +5,7 @@
 
   Eventfeed = (function() {
 
-    function Eventfeed(params) {
+    function Eventfeed(params, context) {
       var option, value;
 
       // default options
@@ -23,6 +23,12 @@
           this.options[option] = value;
         }
       }
+
+      // default context
+      this.context = context != null ? context : this;
+
+      // unique key for this instance
+      this.unique = _genKey();
     }
 
     // run the feed
@@ -38,6 +44,11 @@
       this._buildUrl();
       this._fetchData();
       this._parseData();
+        // create global object to cache options
+        instanceName = "eventfeedCache" + this.unique;
+        window[instanceName] = new Eventfeed(this.options, this);
+        window[instanceName].unique = this.unique;
+      }
 
       // return true if all goes well
       return true;
