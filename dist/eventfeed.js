@@ -33,6 +33,7 @@
 
     // run the feed
     Eventfeed.prototype.run = function(url) {
+      var header, instanceName, script;
 
       // make sure the calendarid is set
       if (typeof this.options.calendarId !== 'string') {
@@ -44,6 +45,19 @@
       this._buildUrl();
       this._fetchData();
       this._parseData();
+      console.log('Fetching feed...');
+
+      // check to see if document exists
+      if (typeof document !== "undefined" && document !== null) {
+        // create script element
+        script = document.createElement('script');
+        // give the script an id for removal later
+        script.id = 'eventfeed-fetcher';
+        // assign the script source, by _buildUrl() or argument
+        script.src = url || this.buildUrl();
+        // add script element to the header
+        header = document.getElementsByTagName('head');
+        header[0].appendChild(script);
         // create global object to cache options
         instanceName = "eventfeedCache" + this.unique;
         window[instanceName] = new Eventfeed(this.options, this);
@@ -109,6 +123,10 @@
       final += key;
       console.log('Building url...');
       console.log('url: ' + final);
+      // add the jsonp callback
+      final += "&callback=eventfeedCache" + this.unique + ".parseData";
+      // return final url
+      return final;
     };
 
     // data fetcher
