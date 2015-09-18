@@ -129,11 +129,43 @@
       return final;
     };
 
-    // data fetcher
-    Eventfeed.prototype._fetchData = function(url) {
-      url = url || '';
-      console.log('Fetching data...');
-      console.log('data: undefined');
+    // data parser (must be a JSON object)
+    Eventfeed.prototype.parseData = function(response) {
+      var header, instanceName;
+      // check if the response is an object
+      if (typeof response !== 'object') {
+        // call error callback if set, else throw an error
+        if ((this.options.error != null) && typeof this.options.error === 'function') {
+          this.options.error.call(this, 'Invalid JSON data.');
+          return false;
+        } else {
+          throw new Error('Invalid JSON response.');
+        }
+      }
+      // check if the api returned an error code
+      if (response.error) {
+        // call error callback if set, else throw an error
+        if ((this.options.error != null) && typeof this.options.error === 'function') {
+          this.options.error.call(this, response.error.code + " " + response.error.message);
+          return false;
+        } else {
+          throw new Error("Error from Google: " + response.error.code + " " + response.error.message);
+        }
+      }
+      // check if the response is empty
+      if (response.items.length === 0) {
+        // call error callback if set, else throw an error
+        if ((this.options.error != null) && typeof this.options.error === 'function') {
+          this.options.error.call(this, 'No events were returned from Google.');
+          return false;
+        } else {
+          throw new Error('No events were returned from Google.');
+        }
+      }
+      // call the success callback if no errors in response
+      if ((this.options.success != null) && typeof this.options.success === 'function') {
+        this.options.success.call(this, response);
+      }
     };
 
     // data parser (must be a JSON object)
