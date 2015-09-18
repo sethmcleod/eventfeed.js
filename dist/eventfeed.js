@@ -1,3 +1,8 @@
+// TO DO:
+// - add callbacks for: before, after, error and success
+// - parse the data and append to html
+// - set up templating options
+
 (function() {
   'use strict';
 
@@ -40,11 +45,6 @@
         throw new Error("Missing calendarId.");
       }
 
-      console.log('Running feed...');
-
-      this._buildUrl();
-      this._fetchData();
-      this._parseData();
       console.log('Fetching feed...');
 
       // check to see if document exists
@@ -69,42 +69,43 @@
     };
 
     // url builder for the request
-    Eventfeed.prototype._buildUrl = function() {
+    Eventfeed.prototype.buildUrl = function() {
       var base, fields, key, final, now;
+      // set variables
       base = "https://www.googleapis.com/calendar/v3/calendars/";
       fields = "&fields=description,items(created,description,end,hangoutLink,htmlLink,id,location,start,status,summary,updated)";
       key = "&key=AIzaSyBl3FauupFzkP3F4BYqL47_keO-PSmrTOQ";
       final = "" + base + this.options.calendarId + "/events?";
       now = (new Date()).toISOString();
-      // max results
+      // max results check
       if (this.options.maxResults != null) {
         if (typeof this.options.maxResults !== 'number') {
           throw new Error("The maxResults option must be a number.");
         }
         final += "&maxResults=" + this.options.maxResults;
       }
-      // single events
+      // single events check
       if (this.options.singleEvents != null) {
         if (typeof this.options.singleEvents !== 'boolean') {
           throw new Error("The singleEvents option must be a boolean.");
         }
         final += "&singleEvents=" + this.options.singleEvents;
       }
-      // show deleted
+      // show deleted check
       if (this.options.showDeleted != null) {
         if (typeof this.options.showDeleted !== 'boolean') {
           throw new Error("The showDeleted option must be a boolean.");
         }
         final += "&showDeleted=" + this.options.showDeleted;
       }
-      // past events
+      // past events check
       if (typeof this.options.pastEvents !== 'boolean') {
         throw new Error("The pastEvents option must be a boolean.");
       }
       if (this.options.pastEvents === false) {
         final += '&timeMin=' + now;
       }
-      // order by
+      // order by check
       switch (this.options.orderBy) {
         case "none":
           break;
@@ -120,8 +121,10 @@
         default:
           throw new Error("Invalid option for orderBy: '" + this.options.orderBy + "'.");
       }
+      // add fields for filtering JSON
+      final += fields;
+      // add API key (eventually add this by an option)
       final += key;
-      console.log('Building url...');
       console.log('url: ' + final);
       // add the jsonp callback
       final += "&callback=eventfeedCache" + this.unique + ".parseData";
@@ -168,11 +171,6 @@
       }
     };
 
-    // data parser (must be a JSON object)
-    Eventfeed.prototype._parseData = function(data) {
-      data = data || 'empty';
-      console.log('Parsing data...');
-      console.log('no data to parse.');
     // helper function to generate unique key
     function _genKey() {
       var S4;
