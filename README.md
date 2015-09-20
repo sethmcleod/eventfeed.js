@@ -64,6 +64,7 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 - `after` (function) - A callback function called when events have been added to the page.
 - `success` (function) - A callback function called when Google returns valid data. (argument -> json object)
 - `error` (function) - A callback function called when there is an error fetching events. (argument -> string message)
+- `mock` (boolean) - Query the events without inserting into the DOM. Use with the success() callback. Default is false.
 
 ## FAQ
 
