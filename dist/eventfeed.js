@@ -1,5 +1,4 @@
 // TO DO:
-// - add callbacks for: before, after, error and success
 // - parse the data and append to html
 // - set up templating options
 
@@ -12,7 +11,6 @@
 
     function Eventfeed(params, context) {
       var option, value;
-
       // default options
       this.options = {
         target: 'eventfeed',
@@ -20,7 +18,6 @@
         pastEvents: false,
         abbreviate: false
       };
-
       // overrides default options if an object is passed
       if (typeof params === 'object') {
         for (option in params) {
@@ -28,10 +25,8 @@
           this.options[option] = value;
         }
       }
-
       // default context
       this.context = context != null ? context : this;
-
       // unique key for this instance
       this.unique = _genKey();
     }
@@ -39,14 +34,14 @@
     // run the feed
     Eventfeed.prototype.run = function(url) {
       var header, instanceName, script;
-
       // make sure the calendarid is set
       if (typeof this.options.calendarId !== 'string') {
         throw new Error("Missing calendarId.");
       }
-
-      console.log('Fetching feed...');
-
+      // call the before() callback if set
+      if ((this.options.before != null) && typeof this.options.before === 'function') {
+        this.options.before.call(this);
+      }
       // check to see if document exists
       if (typeof document !== "undefined" && document !== null) {
         // create script element
@@ -63,7 +58,6 @@
         window[instanceName] = new Eventfeed(this.options, this);
         window[instanceName].unique = this.unique;
       }
-
       // return true if all goes well
       return true;
     };
@@ -165,7 +159,7 @@
           throw new Error('No events were returned from Google.');
         }
       }
-      // call the success callback if no errors in response
+      // call the success() callback if set and no errors in response
       if ((this.options.success != null) && typeof this.options.success === 'function') {
         this.options.success.call(this, response);
       }
@@ -231,4 +225,4 @@
   // assign to global object
   root.Eventfeed = Eventfeed;
 
-}).call(this);
+}());

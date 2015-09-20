@@ -1,6 +1,6 @@
 # Google Calendar Event Feed
 
-![Version](https://img.shields.io/badge/version-beta-red.svg) [![Travis CI](https://img.shields.io/badge/build-passed-brightgreen.svg)](https://travis-ci.org/sethmcleod/eventfeed.js)
+![Version](https://img.shields.io/badge/version-beta-red.svg) [![Travis CI](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://travis-ci.org/sethmcleod/eventfeed.js)
 
 Eventfeed.js is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
 
@@ -44,7 +44,7 @@ Eventfeed will by default look for a `<div id="eventfeed"></div>` and fill it wi
 
 The only thing you'll need is a __calendar id__ for the public calendar. This is usually the email address used to create the calendar.
 
-## Options
+## Standard Options
 
 - `calendarId` (string) - The email address linked to a public calendar. __Required__.
 - `target` (string) - The ID of a DOM element you want to add events to.
@@ -57,6 +57,13 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 - `pastEvents` (boolean) - Whether to include past events. Default is `false`.
 - `showDeleted` (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Default is `false`.
 - `singleEvents` (boolean) - Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Default is `false`.
+
+## Advanced Options
+
+- `before` (function) - A callback function called before fetching events from Google.
+- `after` (function) - A callback function called when events have been added to the page.
+- `success` (function) - A callback function called when Google returns valid data. (argument -> json object)
+- `error` (function) - A callback function called when there is an error fetching events. (argument -> string message)
 
 ## FAQ
 
