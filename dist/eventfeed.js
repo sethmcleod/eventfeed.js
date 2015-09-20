@@ -163,6 +163,10 @@
       if ((this.options.success != null) && typeof this.options.success === 'function') {
         this.options.success.call(this, response);
       }
+        // call the after() callback if set and no errors in response
+        if ((this.options.after != null) && typeof this.options.after === 'function') {
+          this.options.after.call(this, response);
+        }
     };
 
     // helper function to generate unique key
