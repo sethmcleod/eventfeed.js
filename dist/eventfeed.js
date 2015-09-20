@@ -16,7 +16,8 @@
         target: 'eventfeed',
         orderBy: 'none',
         pastEvents: false,
-        abbreviate: false
+        abbreviate: false,
+        mock: false
       };
       // overrides default options if an object is passed
       if (typeof params === 'object') {
@@ -163,10 +164,27 @@
       if ((this.options.success != null) && typeof this.options.success === 'function') {
         this.options.success.call(this, response);
       }
+      // check to see if mock is true
+      if ((typeof document !== "undefined" && document !== null) && this.options.mock === false) {
+        console.log('Parsing...');
+        // remove script element
+        header = document.getElementsByTagName('head')[0];
+        header.removeChild(document.getElementById('eventfeed-fetcher'));
+        // delete cache
+        instanceName = "eventfeedCache" + this.unique;
+        window[instanceName] = void 0;
+        try {
+          delete window[instanceName];
+        } catch (e) {
+          console.log('Cached data could not be deleted.');
+        }
         // call the after() callback if set and no errors in response
         if ((this.options.after != null) && typeof this.options.after === 'function') {
           this.options.after.call(this, response);
         }
+      }
+      // return true if all goes well
+      return true;
     };
 
     // helper function to generate unique key
