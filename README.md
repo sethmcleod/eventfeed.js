@@ -4,7 +4,7 @@
 
 Eventfeed.js is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
 
-> This is currently in working beta and may not function correctly.
+> :warning: This is currently in working beta and may not function correctly.
 
 ## Installation
 Installation is easy: Just download the script from the __dist__ folder and include it in your HTML:
@@ -34,6 +34,7 @@ Eventfeed will by default look for a `<div id="eventfeed"></div>` and fill it wi
         <span class="day">{{day}}</span>
         <span class="title">{{title}}</span>
         <span class="description">{{description}}</span>
+        <span class="location">{{location}}</span>
         <span class="start">{{start}}</span>
         <span class="end">{{end}}</span>
     </div>
@@ -75,6 +76,12 @@ First make sure the calendar linked to your id is public, and the *hide details*
 ![Sharing Settings](https://raw.githubusercontent.com/sethmcleod/eventfeed.js/gh-pages/resources/public.png)
 
  __Currently only `@gmail.com` addresses are supported.__ Using an account from a different domain, one that is connected through Google Apps, will automatically hide event details and the returned JSON data will be differently formatted.  
+
+## To Do List
+
+- Test browser compatibility.
+- Build test suit using [Mocha](http://mochajs.org/) and [Chai](http://chaijs.com/).
+- Add a `template` option for customizing HTML output.
 
 ## Change Log
 
