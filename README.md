@@ -1,10 +1,8 @@
 # Google Calendar Event Feed
 
-![Version](https://img.shields.io/badge/version-beta-red.svg) [![Travis CI](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://travis-ci.org/sethmcleod/eventfeed.js)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) [![Travis CI](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://travis-ci.org/sethmcleod/eventfeed.js)
 
 Eventfeed.js is a simple plugin for displaying a feed of upcoming events using [Google Calendar API v3](https://developers.google.com/google-apps/calendar/v3/reference/events/list). No jQuery required, it's just plain javascript.
-
-> :warning: This is currently in working beta and may not function correctly.
 
 ## Installation
 Installation is easy: Just download the script from the __dist__ folder and include it in your HTML:
@@ -30,13 +28,19 @@ Eventfeed will by default look for a `<div id="eventfeed"></div>` and fill it wi
 ```html
 <div id="eventfeed">
     <div class="event" id="{{id}}">
-        <span class="month">{{month}}</span>
-        <span class="day">{{day}}</span>
-        <span class="title">{{title}}</span>
-        <span class="description">{{description}}</span>
-        <span class="location">{{location}}</span>
-        <span class="start">{{start}}</span>
-        <span class="end">{{end}}</span>
+        <div class="date">
+            <span class="month">{{month}}</span>
+            <span class="day">{{day}}</span>
+        </div>
+        <div class="info">
+            <span class="title">{{title}}</span>
+            <span class="description">{{description}}</span>
+            <span class="location">{{location}}</span>
+        </div>
+        <div class="time">
+            <span class="start">From: {{start}}</span>
+            <span class="end">To: {{end}}</span>
+        </div>
     </div>
 </div>
 ```
@@ -49,6 +53,7 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 
 - `calendarId` (string) - The email address linked to a public calendar. __Required__.
 - `target` (string) - The ID of a DOM element you want to add events to.
+- `links` (boolean) - Whether or not to link the event elements to their URLs. Default is true.
 - `abbreviate` (boolean) - Whether or not to abbreviate the names of months. Default is `false`.
 - `maxResults` (number) - Maximum number of events returned. Default is `250`.
 - `orderBy` (string) - The order of the events returned. Available options are:
@@ -79,6 +84,7 @@ First make sure the calendar linked to your id is public, and the *hide details*
 
 ## To Do List
 
+- Add default styling.
 - Test browser compatibility.
 - Build test suit using [Mocha](http://mochajs.org/) and [Chai](http://chaijs.com/).
 - Add a `template` option for customizing HTML output.
