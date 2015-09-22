@@ -1,7 +1,3 @@
-// TO DO:
-// - parse the data and append to html
-// - set up templating options
-
 (function() {
   'use strict';
 
@@ -17,6 +13,7 @@
         orderBy: 'none',
         pastEvents: false,
         abbreviate: false,
+        links: false,
         mock: false
       };
       // overrides default options if an object is passed
@@ -129,7 +126,7 @@
 
     // data parser (must be a JSON object)
     Eventfeed.prototype.parseData = function(response) {
-      var header, instanceName;
+      var header, instanceName, events, fragment, el, event, anchor, date, month, day, info, title, description, location, time, start, end;
       // check if the response is an object
       if (typeof response !== 'object') {
         // call error callback if set, else throw an error
@@ -166,7 +163,91 @@
       }
       // check to see if mock is true
       if ((typeof document !== "undefined" && document !== null) && this.options.mock === false) {
-        console.log('Parsing...');
+        // create fragment (temporary node)
+        fragment = document.createDocumentFragment();
+        // loop through events and add to fragment
+        for (var i = 0; i < response.items.length; i++) {
+          event = response.items[i];
+          console.log(event);
+          // create event element
+          el = document.createElement('div');
+          el.className = 'event';
+          el.id = event.id;
+          // add date container
+          date = document.createElement('div');
+          date.className = 'date';
+          el.appendChild(date);
+          // add info container
+          info = document.createElement('div');
+          info.className = 'info';
+          el.appendChild(info);
+          // add time container
+          time = document.createElement('div');
+          time.className = 'time';
+          el.appendChild(time);
+          // add month
+          month = document.createElement('span');
+          month.className = 'month';
+          month.innerHTML = _thisMonth(event.start.dateTime || event.start.date, this.options.abbreviate);
+          date.appendChild(month);
+          // add day
+          day = document.createElement('span');
+          day.className = 'day';
+          day.innerHTML = _thisDay(event.start.dateTime || event.start.date, this.options.abbreviate);
+          date.appendChild(day);
+          // add title
+          if (event.summary) {
+            title = document.createElement('span');
+            title.className = 'title';
+            title.innerHTML = event.summary;
+            info.appendChild(title);
+          }
+          // add description
+          if (event.description) {
+            description = document.createElement('span');
+            description.className = 'description';
+            description.innerHTML = event.description;
+            info.appendChild(description);
+          }
+          // add location
+          if (event.location) {
+            location = document.createElement('span');
+            location.className = 'location';
+            location.innerHTML = event.location;
+            info.appendChild(location);
+          }
+          // check if it's an all day event
+          if (event.start.date && event.end.date) {
+            start = document.createElement('span');
+            start.className = 'start';
+            start.innerHTML = 'All day event';
+            time.appendChild(start);
+          } else {
+            // add start time
+            start = document.createElement('span');
+            start.className = 'start';
+            start.innerHTML = 'From: ' + _thisTime(event.start.dateTime || event.start.date);
+            time.appendChild(start);
+            // add end time
+            end = document.createElement('span');
+            end.className = 'end';
+            end.innerHTML = 'To: ' + _thisTime(event.end.dateTime || event.end.date);
+            time.appendChild(end);
+          }
+          // add link to event url
+          if (this.options.links === true) {
+            anchor = document.createElement('a');
+            anchor.href = event.htmlLink;
+            anchor.appendChild(el);
+            fragment.appendChild(anchor);
+            console.log(anchor);
+          } else {
+            fragment.appendChild(el);
+            console.log(el);
+          }
+        }
+        // append fragment to target
+        document.getElementById(this.options.target).appendChild(fragment);
         // remove script element
         header = document.getElementsByTagName('head')[0];
         header.removeChild(document.getElementById('eventfeed-fetcher'));
