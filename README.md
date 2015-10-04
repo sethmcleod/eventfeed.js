@@ -53,15 +53,15 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 
 - `calendarId` (string) - The email address linked to a public calendar. __Required__.
 - `target` (string) - The ID of a DOM element you want to add events to.
-- `links` (boolean) - Whether or not to link the event elements to their URLs. Default is true.
+- `links` (boolean) - Whether or not to link the event elements to their URLs. Default is `true`.
 - `abbreviate` (boolean) - Whether or not to abbreviate the names of months. Default is `false`.
 - `maxResults` (number) - Maximum number of events returned. Default is `250`.
 - `orderBy` (string) - The order of the events returned. Available options are:
     - `none` (default) - As they come from Instagram.
-    - `startTime` - Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)
+    - `startTime` - Order by the start date/time (ascending). This is only available when the singleEvents option is `true`.
     - `updated` - Order by last modification time (ascending).
 - `pastEvents` (boolean) - Whether to include past events. Default is `false`.
-- `showDeleted` (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Default is `false`.
+- `showDeleted` (boolean) - Whether to include deleted events (with a status of "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both `false`. If showDeleted and singleEvents are both `true`, only single instances of deleted events (but not the underlying recurring events) are returned. Default is `false`.
 - `singleEvents` (boolean) - Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Default is `false`.
 
 ## Advanced Options
@@ -70,7 +70,7 @@ The only thing you'll need is a __calendar id__ for the public calendar. This is
 - `after` (function) - A callback function called when events have been added to the page.
 - `success` (function) - A callback function called when Google returns valid data. (argument -> json object)
 - `error` (function) - A callback function called when there is an error fetching events. (argument -> string message)
-- `mock` (boolean) - Query the events without inserting into the DOM. Use with the success() callback. Default is false.
+- `mock` (boolean) - Query the events without inserting into the DOM. Use with the success() callback. Default is `false`.
 
 ## FAQ
 
@@ -80,7 +80,7 @@ First make sure the calendar linked to your id is public, and the *hide details*
 
 ![Sharing Settings](https://raw.githubusercontent.com/sethmcleod/eventfeed.js/gh-pages/resources/public.png)
 
- __Currently only `@gmail.com` addresses are supported.__ Using an account from a different domain, one that is connected through Google Apps, will automatically hide event details and the returned JSON data will be differently formatted.  
+ __Currently only `@gmail.com` addresses are supported.__ Using an account from a different domain, one that is connected through Google Apps, will omit event details and the returned JSON data will be differently formatted.  
 
 ## To Do List
 
