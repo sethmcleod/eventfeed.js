@@ -3,6 +3,7 @@
 // ////////////////////////////////////////////////
 
 var gulp = require('gulp'),
+	concat = require('gulp-concat'),
 	csso = require('gulp-csso'),
 	autoprefixer = require('gulp-autoprefixer'),
 	browserSync = require('browser-sync'),
@@ -26,7 +27,7 @@ function errorlog(err){
 // Scripts Task
 // ////////////////////////////////////////////////
 
-gulp.task('scripts', function() {
+gulp.task('minify', function() {
 	gulp.src('dist/eventfeed.js')
 	.pipe(uglify())
 	.on('error', errorlog)
@@ -35,20 +36,12 @@ gulp.task('scripts', function() {
 	.pipe(reload({stream:true}));
 });
 
-
-// ////////////////////////////////////////////////
-// Styles Task
-// ///////////////////////////////////////////////
-
-gulp.task('styles', function() {
-	gulp.src('example/example.css')
-	.pipe(autoprefixer({
-		browsers: ['last 3 versions']
-	}))
-	.pipe(csso())
+gulp.task('sign', function() {
+	gulp.src(['dist/signature.js', 'dist/eventfeed.min.js'])
+	.pipe(concat('temp.js'))
 	.on('error', errorlog)
-	.pipe(rename('example.min.css'))
-	.pipe(gulp.dest('example/'))
+	.pipe(rename('eventfeed.min.js'))
+	.pipe(gulp.dest('dist/'))
 	.pipe(reload({stream:true}));
 });
 
@@ -66,7 +59,6 @@ gulp.task('serve', function() {
 });
 
 gulp.task ('watch', function(){
-	gulp.watch('example/example.css', ['styles']);
 	gulp.watch('dist/eventfeed.js', ['scripts']);
 });
 
@@ -75,6 +67,6 @@ gulp.task ('watch', function(){
 // Main Tasks
 // ////////////////////////////////////////////////
 
-gulp.task('compile', ['scripts', 'styles']);
+gulp.task('compile', ['minify', 'sign']);
 
-gulp.task('default', ['scripts', 'styles', 'serve', 'watch']);
+gulp.task('default', ['minify', 'sign', 'serve', 'watch']);

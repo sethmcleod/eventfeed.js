@@ -1,3 +1,11 @@
+/**
+ * Eventfeed.js - Google Calender Event Feed
+ * v1.0.0 - MIT License
+ * https://sethmcleod.github.io/eventfeed.js/ - git://github.com/sethmcleod/eventfeed.js.git
+ * by Seth Mcleod - @sthmcleod
+ */
+
+
 (function() {
   'use strict';
 
